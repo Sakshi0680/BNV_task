@@ -21,6 +21,6 @@ router.get('/all-users', userController.getAllUsers);
 router.get('/user/:id', userController.getUserById);
 router.put('/edit/:id', upload.single('profile'), userController.updateUser);
 router.delete('/delete/:id', userController.deleteUser);
-router.get('/export', userController.exportToCsv);
+router.get('/export-users', userController.exportToCsv);
 
 module.exports = router;
