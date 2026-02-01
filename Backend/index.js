@@ -16,14 +16,10 @@ if (!fs.existsSync(uploadDir)) {
 }
 
 const MONGO_URL = process.env.MONGO_URI;
-if (!MONGO_URL) {
-    console.error("❌ MONGO_URI is not defined. Set it in Render Environment Variables!");
-    process.exit(1); // Stop the server if no DB URL
-}
 
 mongoose.connect(MONGO_URL)
-  .then(() => console.log("🌐 Cloud Database Connected Successfully"))
-  .catch((err) => console.error("❌ Database Connection Error:", err.message));
+    .then(() => console.log("🌐 Cloud Database Connected Successfully"))
+    .catch((err) => console.error("❌ Database Connection Error:", err.message));
 
 app.use(cors());
 app.use(express.json());
