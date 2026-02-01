@@ -16,8 +16,7 @@ if (!fs.existsSync(uploadDir)) {
 }
 
 // 2. Database Connection (UPDATED TO CLOUD ATLAS)
-const MONGO_URL = "mongodb+srv://sakshideshmukh680_db_user:Sakshi@2032004@cluster0.xcxmggl.mongodb.net/BNV_Task_Database?retryWrites=true&w=majority&appName=Cluster0"; 
-
+const MONGO_URL = "mongodb://sakshideshmukh680_db_user:Sakshi2532004@cluster0-shard-00-00.xcxmggl.mongodb.net:27017,cluster0-shard-00-01.xcxmggl.mongodb.net:27017,cluster0-shard-00-02.xcxmggl.mongodb.net:27017/BNV_Task_Database?ssl=true&replicaSet=atlas-kv166q-shard-0&authSource=admin&retryWrites=true&w=majority";
 mongoose.connect(MONGO_URL)
     .then(() => console.log("Cloud Database Connected Successfully"))
     .catch((err) => console.log("Database Connection Error: ", err));
