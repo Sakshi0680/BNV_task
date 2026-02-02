@@ -9,28 +9,26 @@ const UserList = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    // ✅ POINTING TO RENDER URL
+   
     const API_BASE_URL = "https://bnv-task-uso1.onrender.com/api";
 
     const fetchUsers = async () => {
-        setLoading(true);
-        setError(null);
-        try {
-            // ✅ Updated path to /all-users to match your userRoutes.js
-            const res = await axios.get(`${API_BASE_URL}/all-users?search=${search}`);
+     setLoading(true);
+     setError(null);
+         try {
             
-            // ✅ Fixed logic: match the { status: "ok", data: [...] } format from your backend
-            if (res.data && res.data.data) {
-                setUsers(res.data.data);
-            }
-        } catch (err) {
-            console.error("Fetch Error:", err);
-            setError("Failed to fetch users. Check if the Render Backend is awake!");
-        } finally {
-            setLoading(false);
+            const res = await axios.get("https://bnv-task-uso1.onrender.com/");
+            
+        if (res.data && res.data.data) {
+            setUsers(res.data.data); 
         }
-    };
-
+    } catch (err) {
+        console.error("Fetch Error:", err);
+        setError("Failed to fetch users.");
+    } finally {
+        setLoading(false);
+    }
+};
     const handleExport = () => {
         window.open(`${API_BASE_URL}/export-users`, "_blank");
     };
