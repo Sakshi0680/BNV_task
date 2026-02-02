@@ -16,7 +16,7 @@ exports.createUser = async (req, res) => {
 // 2. Get All Users (with Search & Pagination) [cite: 9, 15]
 exports.getAllUsers = async (req, res) => {
     const { search = "", page = 1 } = req.query;
-    const limit = 5; // Items per page
+    const limit = 5; 
     const skip = (page - 1) * limit;
 
     try {
@@ -27,14 +27,24 @@ exports.getAllUsers = async (req, res) => {
                 { email: { $regex: search, $options: 'i' } }
             ]
         };
+        
         const users = await User.find(query).limit(limit).skip(skip);
         const count = await User.countDocuments(query);
-        res.status(200).json({ users, totalPages: Math.ceil(count / limit) });
+
+        // 2. CHANGE THIS LINE: Wrap the response to match your Frontend logic
+        // Frontend expects res.data.data (as per our previous update)
+        res.status(200).json({ 
+            status: "ok", 
+            data: users, 
+            totalPages: Math.ceil(count / limit) 
+        });
+
     } catch (error) {
-        res.status(500).json({ error: "Failed to fetch users" });
+        // Log the error so you can see it in Render Logs
+        console.error("Controller Error:", error); 
+        res.status(500).json({ status: "error", error: "Failed to fetch users" });
     }
 };
-
 // 3. Get Single User
 exports.getUserById = async (req, res) => {
     try {
