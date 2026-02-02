@@ -1,9 +1,10 @@
-require('dotenv').config();
+equire('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 const mongoose = require('mongoose');
+const User = require('./models/User');
 const userRoutes = require('./routes/userRoutes');
 
 const app = express();
@@ -29,10 +30,7 @@ mongoose.connect(MONGO_URL)
 // Root route (What you see in the browser currently)
 app.get("/", async (req, res) => {
     try {
-        // This fetches all users created by your registration form
         const users = await User.find({});
-        
-        // This sends the live data to the browser immediately
         res.status(200).json({
             message: "BNV Task Backend is Live!",
             total_users: users.length,
