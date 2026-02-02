@@ -4,22 +4,25 @@ import axios from 'axios';
 import { Card, Button, Container, Row, Col, Badge } from 'react-bootstrap';
 
 const UserDetails = () => {
-    const { id } = useParams(); // URL must be /user/ID_HERE
+    const { id } = useParams(); // URL must be /user/:id
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
 
+    // Use environment variable for API base URL (local or Render)
+    const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
     useEffect(() => {
         const fetchUser = async () => {
-            if (!id) return; // Stop if ID is undefined
+            if (!id) return;
             try {
-                const res = await axios.get(`http://localhost:5000/api/user/${id}`);
+                const res = await axios.get(`${API_BASE_URL}/api/user/${id}`);
                 setUser(res.data);
             } catch (err) {
                 console.error("Error fetching user", err);
             }
         };
         fetchUser();
-    }, [id]);
+    }, [id, API_BASE_URL]);
 
     if (!user) return <div className="text-center mt-5">Loading User Data...</div>;
 
@@ -33,7 +36,7 @@ const UserDetails = () => {
                         <div className="rounded-circle bg-white d-flex align-items-center justify-content-center border border-4 border-white shadow" 
                              style={{ width: '180px', height: '180px' }}>
                             <img 
-                                src={user.profile ? `http://localhost:5000/uploads/${user.profile}` : defaultIcon} 
+                                src={user.profile ? `${API_BASE_URL}/uploads/${user.profile}` : defaultIcon} 
                                 alt="Profile"
                                 style={{ width: '120px', height: '120px', objectFit: 'cover', borderRadius: '50%' }}
                                 onError={(e) => { e.target.src = defaultIcon; }} 
