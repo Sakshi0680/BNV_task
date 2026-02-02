@@ -11,4 +11,4 @@ const userSchema = new mongoose.Schema({
     profile: { type: String } // This stores the filename from multer
 });
 
-module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model('user', userSchema,'users');
