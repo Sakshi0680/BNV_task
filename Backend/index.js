@@ -24,23 +24,17 @@ mongoose.connect(MONGO_URL)
     .then(() => console.log("Cloud Database Connected Successfully"))
     .catch((err) => console.error("Database Connection Error:", err.message));
 
-
 app.get("/", async (req, res) => {
     try {
         const users = await User.find({});
         res.status(200).json({
-            message: "BNV Task Backend is Live!",
-            total_users: users.length,
+            status: "ok",
             data: users
         });
     } catch (error) {
-        res.status(500).json({ 
-            error: "Could not fetch users from database",
-            details: error.message 
-        });
+        res.status(500).json({ error: error.message });
     }
 });
-
 
 app.use('/api', userRoutes);
 

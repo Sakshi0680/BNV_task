@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
     gender: { type: String, required: true },
     status: { type: String, required: true },
     location: { type: String, required: true },
-    profile: { type: String } // This stores the filename from multer
-});
+    profile: { type: String } 
+}, { timestamps: true });
 
-module.exports = mongoose.model('user', userSchema,'users');
+module.exports = mongoose.model('user', userSchema, 'users');
