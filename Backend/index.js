@@ -18,7 +18,7 @@ if (!fs.existsSync(uploadDir)) {
 }
 app.use('/uploads', express.static(uploadDir));
 
-const MONGO_URL = process.env.MONGO_URI || "mongodb://sakshideshmukh680_db_user:Sakshi2532004@cluster0-shard-00-00.xcxmgg1.mongodb.net:27017,cluster0-shard-00-01.xcxmgg1.mongodb.net:27017,cluster0-shard-00-02.xcxmgg1.mongodb.net:27017/BNV_Task_Database?ssl=true&replicaSet=atlas-kv166q-shard-0&authSource=admin&retryWrites=true&w=majority";
+const MONGO_URL = process.env.MONGO_URI || "mongodb+srv://sakshideshmukh680_db_user:Sakshi2532004@cluster0.xcxmgg1.mongodb.net/BNV_Task_Database?retryWrites=true&w=majority";
 
 mongoose.connect(MONGO_URL)
     .then(() => console.log("Cloud Database Connected Successfully"))
