@@ -25,7 +25,7 @@ const RegisterForm = () => {
         Object.keys(userData).forEach(key => formData.append(key, userData[key]));
 
         try {
-            await axios.post("https://bnv-task-uso1.onrender.com/api/register", data);
+            await axios.post("https://bnv-task-uso1.onrender.com/api/register", formData);
             alert("Registration Successful!");
             navigate('/'); // Go back to list
         } catch (err) {
