@@ -9,36 +9,37 @@ const UserList = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    // 🛠️ Fetch Users with Error Handling
+    // ✅ POINTING TO RENDER URL
+    const API_BASE_URL = "https://bnv-task-uso1.onrender.com/api";
+
     const fetchUsers = async () => {
         setLoading(true);
         setError(null);
         try {
-            // Using a relative path or environment variable is better for production
-            const res = await axios.get(`http://localhost:5000/api/all-users?search=${search}`);
+            // ✅ Updated path to /all-users to match your userRoutes.js
+            const res = await axios.get(`${API_BASE_URL}/all-users?search=${search}`);
             
-            if (res.data && res.data.users) {
-                setUsers(res.data.users);
+            // ✅ Fixed logic: match the { status: "ok", data: [...] } format from your backend
+            if (res.data && res.data.data) {
+                setUsers(res.data.data);
             }
         } catch (err) {
             console.error("Fetch Error:", err);
-            setError("Failed to fetch users. Please ensure the Backend and Database are connected.");
+            setError("Failed to fetch users. Check if the Render Backend is awake!");
         } finally {
             setLoading(false);
         }
     };
 
-    // 🛠️ Export CSV Handler
     const handleExport = () => {
-        window.open("http://localhost:5000/api/export-users", "_blank");
+        window.open(`${API_BASE_URL}/export-users`, "_blank");
     };
 
-    // 🛠️ Delete User Placeholder
     const handleDelete = async (id) => {
         if (window.confirm("Are you sure you want to delete this user?")) {
             try {
-                await axios.delete(`http://localhost:5000/api/delete-user/${id}`);
-                fetchUsers(); // Refresh list after delete
+                await axios.delete(`${API_BASE_URL}/delete-user/${id}`);
+                fetchUsers(); 
             } catch (err) {
                 alert("Error deleting user");
             }
@@ -65,7 +66,6 @@ const UserList = () => {
                 </div>
             </div>
 
-            {/* Show error message if backend/DB is down */}
             {error && <Alert variant="danger">{error}</Alert>}
 
             {loading ? (
@@ -77,7 +77,7 @@ const UserList = () => {
                 <Table responsive hover>
                     <thead className="table-dark">
                         <tr>
-                            <th>ID</th><th>FullName</th><th>Email</th><th>Gender</th><th>Status</th><th>Action</th>
+                            <th>ID</th><th>FullName</th><th>Email</th><th>UserType</th><th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -87,8 +87,7 @@ const UserList = () => {
                                     <td>{index + 1}</td>
                                     <td>{`${user.fname} ${user.lname}`}</td>
                                     <td>{user.email}</td>
-                                    <td>{user.gender === 'Male' ? 'M' : 'F'}</td>
-                                    <td>{user.status}</td>
+                                    <td>{user.userType}</td>
                                     <td>
                                         <Link to={`/user/${user._id}`} className="btn btn-sm btn-info me-2">View</Link>
                                         <Button 
@@ -103,7 +102,7 @@ const UserList = () => {
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="6" className="text-center">No users found</td>
+                                <td colSpan="5" className="text-center">No users found in Database</td>
                             </tr>
                         )}
                     </tbody>
