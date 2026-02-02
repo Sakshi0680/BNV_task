@@ -15,7 +15,7 @@ const UserList = () => {
         setLoading(true);
         setError(null);
         try {
-            const res = await axios.get("https://bnv-task-uso1.onrender.com/");
+            const res = await axios.get("https://bnv-task-uso1.onrender.com/api/users");
             if (res.data && res.data.data) {
                 setUsers(res.data.data);
             }
