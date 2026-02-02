@@ -27,8 +27,23 @@ mongoose.connect(MONGO_URL)
     .catch((err) => console.error("Database Connection Error:", err.message));
 
 // Root route (What you see in the browser currently)
-app.get("/", (req, res) => {
-    res.send("Welcome! The BNV Task backend is running successfully.");
+app.get("/", async (req, res) => {
+    try {
+        // This fetches all users created by your registration form
+        const users = await User.find({});
+        
+        // This sends the live data to the browser immediately
+        res.status(200).json({
+            message: "BNV Task Backend is Live!",
+            total_users: users.length,
+            data: users
+        });
+    } catch (error) {
+        res.status(500).json({ 
+            error: "Could not fetch users from database",
+            details: error.message 
+        });
+    }
 });
 
 // Use the User Routes with an '/api' prefix
