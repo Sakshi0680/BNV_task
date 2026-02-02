@@ -20,19 +20,23 @@ const RegisterForm = () => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        const formData = new FormData();
-        Object.keys(userData).forEach(key => formData.append(key, userData[key]));
+    e.preventDefault();
+    const formData = new FormData();
+    Object.keys(userData).forEach(key => formData.append(key, userData[key]));
 
-        try {
-            await axios.post("https://bnv-task-uso1.onrender.com/api/register", formData);
-            alert("Registration Successful!");
-            navigate('/'); // Go back to list
-        } catch (err) {
-            console.error(err);
-            alert("Error during registration");
-        }
-    };
+    try {
+        await axios.post("https://bnv-task-uso1.onrender.com/api/register", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        });
+        alert("Registration Successful!");
+        navigate('/'); 
+    } catch (err) {
+        console.error("Registration Error:", err.response?.data || err.message);
+        alert("Error during registration: " + (err.response?.data?.error || "Check console"));
+    }
+};
 
     return (
         <Container className="mt-4 mb-5">

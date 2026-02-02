@@ -9,7 +9,11 @@ const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: ["https://resilient-nasturtium-6c3d6c.netlify.app", "http://localhost:3000"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+}));
 app.use(express.json());
 
 const uploadDir = path.join(__dirname, 'uploads');
